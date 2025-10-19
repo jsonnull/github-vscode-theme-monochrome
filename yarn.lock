@@ -1629,9 +1629,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"github-vscode-theme@workspace:.":
+"github-vscode-theme-monochrome@workspace:.":
   version: 0.0.0-use.local
-  resolution: "github-vscode-theme@workspace:."
+  resolution: "github-vscode-theme-monochrome@workspace:."
   dependencies:
     "@changesets/changelog-github": "npm:^0.4.1"
     "@changesets/cli": "npm:^2.17.0"
