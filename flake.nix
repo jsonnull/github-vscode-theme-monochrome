@@ -26,6 +26,8 @@
             vscodeExtPublisher = "jsonnull";
             vscodeExtName = "github-vscode-theme-monochrome";
             vscodeExtUniqueId = "jsonnull.github-vscode-theme-monochrome";
+
+            version = "0.0.1";
           };
         };
       in
