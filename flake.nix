@@ -22,9 +22,12 @@
           src = ./.;
           overrideAttrs = old: {
             buildPhase = "yarn build";
+
+            vscodeExtPublisher = "jsonnull";
+            vscodeExtName = "github-vscode-theme-monochrome";
+            vscodeExtUniqueId = "jsonnull.github-vscode-theme-monochrome";
           };
         };
-
       in
       {
         packages.default = package;
