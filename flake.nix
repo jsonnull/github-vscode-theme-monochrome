@@ -18,17 +18,35 @@
         pkgs = import nixpkgs { inherit system; };
         nodejs = pkgs.nodejs_22;
 
-        package = pkgs.callPackage ./yarn-project.nix { inherit nodejs; } {
+        extName = "github-vscode-theme-monochrome";
+        extVersion = "0.0.1";
+        extPublisher = "jsonnull";
+
+        extVsix = pkgs.callPackage ./yarn-project.nix { inherit nodejs; } {
           src = ./.;
+
           overrideAttrs = old: {
-            buildPhase = "yarn build";
+            buildPhase = ''
+              yarn build
+              ${pkgs.vsce}/bin/vsce package -o ${extName}-${extVersion}.zip --no-dependencies
+            '';
 
-            vscodeExtPublisher = "jsonnull";
-            vscodeExtName = "github-vscode-theme-monochrome";
-            vscodeExtUniqueId = "jsonnull.github-vscode-theme-monochrome";
-
-            version = "0.0.1";
+            installPhase = ''
+              mkdir -p $out/share/vscode/extensions
+              mv ${extName}-${extVersion}.zip $out/share/vscode/extensions
+            '';
           };
+        };
+
+        package = pkgs.vscode-utils.buildVscodeExtension {
+          name = extName;
+          pname = extName;
+          version = extVersion;
+          publisher = extPublisher;
+          src = "${extVsix}/share/vscode/extensions/${extName}-${extVersion}.zip";
+          vscodeExtPublisher = extPublisher;
+          vscodeExtName = extName;
+          vscodeExtUniqueId = "${extPublisher}.${extName}";
         };
       in
       {
